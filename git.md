@@ -94,6 +94,9 @@ YOU’RE MODIFYING YOUR CODE WHEN YOU SUDDENLY REALIZE THAT THE CHANGES YOU MADE
 	$ git reset HEAD file.js
 	> then restore the file with
 	$ git checkout -- file.js
+
+### If you wish to overwrite the previous git commit with a new one
+`git commit --amend`
 	
 ## GIT HISTORY
 1. SHOW LOG OF COMMIT HISTORY, FROM THE LATEST TO OLDEST 
@@ -153,6 +156,20 @@ if you've already created a develop branch for the project on your local compute
 	
 3. To switch
 	`git checkout branchname`
+
+3. To rename branch br1 to br2
+    `git branch -m br1 br2`
+
+4. To undo a branch merge
+    `git merge --abort`
+
+5. You are working on a project with a colleague. She created a feature branch (feature/user-profile) and pushed it to the repository. This command can you run to pull and create that remote branch locally
+
+    `git checkout -b feature/user-profile origin feature/user-profile`
+
+6.  To delete a branch
+    `git branch -d branchname`
+
 	
 	
 	

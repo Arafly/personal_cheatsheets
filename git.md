@@ -73,43 +73,52 @@ THE -U OPTION TELLS GIT TO CREATE THE BRANCH MASTER ON ORIGIN IF IT DOESN’T EX
 	
 1.  RESETTING FILES
 YOU’RE MODIFYING YOUR CODE WHEN YOU SUDDENLY REALIZE THAT THE CHANGES YOU MADE ARE NOT GREAT, AND YOU’D LIKE TO RESET THEM. RATHER THAN CLICKING UNDO ON EVERYTHING YOU EDITED, YOU CAN RESET YOUR FILES TO THE HEAD OF THE BRANCH:
-	$ git reset --hard HEAD
+	`$ git reset --hard HEAD`
 
-OR IF YOU WANT TO RESET A SINGLE FILE:
-	$ git checkout HEAD -- file.js
+>  If you have staged a file say example.py ready for commit but you wish to unstage it, which command will you use
+  `git reset HEAD example.py`
+
+- OR IF YOU WANT TO RESET A SINGLE FILE:
+	`$ git checkout HEAD -- file.js`
+
+- NOW, IF YOU ALREADY COMMITTED YOUR CHANGES, BUT STILL WANT TO REVERT BACK, YOU CAN USE:
+`$ git reset --soft HEAD~1`
 	
-NOW, IF YOU ALREADY COMMITTED YOUR CHANGES, BUT STILL WANT TO REVERT BACK, YOU CAN USE:
-	$ git reset --soft HEAD~1
-	
-DELETING A FILE USING GIT. !REMEMBER TO COMMIT AFTERWARDS
+### DELETING A FILE USING GIT. !REMEMBER TO COMMIT AFTERWARDS
 	$ git rm file.js
-TO FORCEFULLY REMOVE THE FILE (-R WALKS THROUGH THE FILE OR FOLDER, WHILE F REMOVES IT FORCEFULLY)
+
+### TO FORCEFULLY REMOVE THE FILE (-R(recursively) WALKS THROUGH THE FILE OR FOLDER, WHILE F REMOVES IT FORCEFULLY)
 	$ git rm -rf file.js
 	
-IF YOU CHANGE YOUR MIND AFTER REMOVING YOUR FILE, JUST BEFORE YOU COMMIT. IF YOU WANT YOUR FILE BACK. YOU FIRST UNSTAGE IT BY TYPING
+### IF YOU CHANGE YOUR MIND AFTER REMOVING YOUR FILE, JUST BEFORE YOU COMMIT. IF YOU WANT YOUR FILE BACK. YOU FIRST UNSTAGE IT BY TYPING
 	$ git reset HEAD file.js
-	then restore the file with
+	> then restore the file with
 	$ git checkout -- file.js
 	
-GIT HISTORY
-SHOW LOG OF COMMIT HISTORY, FROM THE LATEST TO OLDEST 
-	$ git log 
-DISPLAY THE LOG IN ONE LINE, IN A SHORT FORMAT
-	$ git log --all --online -graph --decorate (this has been aliased tho)
-YOU COULD SPECIFY A RANGE OF COMMIT ID
-	$ git log 33f23q3...a6se423
-USING TIME BASED LOG
-	$ git log --since="2 days ago"
-TO CHECK THE HISTORY ON A PARTICULAR FILE
-	$ git log -- file.js
-TO SEE THE HISTORY OF WHAT CHANGES HAPPENED
-	$ git show
+## GIT HISTORY
+1. SHOW LOG OF COMMIT HISTORY, FROM THE LATEST TO OLDEST 
+	`$ git log `
+
+- Gives the last 2 git entries
+    `git log -2`
+
+2. DISPLAY THE LOG IN ONE LINE, IN A SHORT FORMAT
+	`$ git log --all --online -graph --decorate `(this has been aliased tho)
+- YOU COULD SPECIFY A RANGE OF COMMIT ID
+	`$ git log 33f23q3...a6se423`
+- USING TIME BASED LOG
+	`$ git log --since="2 days ago"`
+- TO CHECK THE HISTORY ON A PARTICULAR FILE
+	`$ git log -- file.js`
+- TO SEE THE HISTORY OF WHAT CHANGES HAPPENED
+	`$ git show`
 	
 	
-To update git version on Windows
+### To update git version on Windows
 	git update-git-for-windows
 	
 
+```
 …or create a new repository on the command line
 echo "# Lemp_Stack" >> README.md
 git init
@@ -123,32 +132,27 @@ git push -u origin master
 git remote add origin https://github.com/Arafly/Lemp_Stack.git
 git branch -M master
 git push -u origin master
+```
 	
-	
-fatal: refusing to merge unrelated histories
-	git pull origin branchname --allow-unrelated-histories
+## FIXES
 
-Contributing to the documentation project
-Contributing this project is as easy as ever. After making the necessary contributions that you desire, open the project in your terminal or powershell.
+1. fatal: refusing to merge unrelated histories
+	`git pull origin branchname --allow-unrelated-histories`
 
-All you need to do is to checkout to the develop branch on your local computer using:
+
+```All you need to do is to checkout to the develop branch on your local computer using:
 
 	git checkout -b develop
 if you've already created a develop branch for the project on your local computer, then run:
 
 	git checkout develop
-Next, make the changes your want to make and then stage, commit and push to the remote develop branch:
+```
 
-	git add -A
-	git commit -m "Add more tutorials"
-	git push origin develop
-You can then login to BitBucket and create a PR to merge changes from the develop branch to master branch.
-
-To check the branch you're on:
-	git branch -vv
+2. To check the branch you're on:
+	`git branch -vv`
 	
-To switch
-	git checkout branchname
+3. To switch
+	`git checkout branchname`
 	
 	
 	

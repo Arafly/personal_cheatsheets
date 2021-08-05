@@ -29,10 +29,50 @@ Local user information is stored in the /etc/passwd file. Each line in this file
 9. To check environmental variables
 	`env`
  
-Kernel version, distro and stuff
-	uname -a
+10. Kernel version, distro and stuff
+	`uname -a`
 	
-To check space
+### GREP, SED & AWK
+GREP finds only. SED finds and replaces.
+
+```
+^ - finds at the beginning of the line
+$ - finds at the end of the line
+```
+
+- Search for a word and display the line number
+    `grep -n "word" particularfile.txt`
+
+- Search for a word at the beginning of a line
+  `grep -n ^"word" particularfile.txt`
+
+- Search for a word at the end of a line
+  `grep -n "word"$ particularfile.txt`
+
+- This gets every instance of "th" from the file
+    `grep -n 'th..' partif.txt`
+
+- Search for characters between 0 to 9
+    `grep -n '[0-9]' particular.txt`
+    `grep -n [A-Za-z0-9] part.md`
+
+- Searching for square braces "[]"?
+    `grep -n '\[\]' *.md'`
+
+- Case insensitive. Use "-i" instead of "-n"
+
+- Searches for all the pattern that starts with “lines” and ends with “empty” with anything in-between. i.e To search “lines[anything in-between]empty” in the demo_file.
+
+`$ grep "lines.*empty" demo_file`
+Two lines above this line is empty.
+  
+
+
+> Runs the last command and counts (normally what -C does is count)
+"!! -c"
+
+ 
+### To check space
 	df -ah | htop | top
 	df -h filename
 	free -h

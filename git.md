@@ -12,13 +12,18 @@
     $ git commit --amend --reset-author
 
 ### TO STASH 
+	$ git stash
 	$ git stash save nameofstash
+
+### SHOW CONTENT OF STASHED FILES WITHOUT APPLYING
+	$ git stash list
+	$ git stash show -p
 	
 ### TO UNSTASH
+	$ git stash apply
 	$ git stash apply stash@{0}
 	
-### SHOW CONTENT OF STASHED FILES WITHOUT APPLYING
-	$ git stash show -p
+
 
 ## GIT FLOW
 
@@ -51,7 +56,7 @@
 	 
 
 > HEAD MEANS YOUR LOCAL CHANGES ->
-UPSTREAM IS THE FILE ON THE MASTERS REPO <-
+UPSTREAM IS THE FILE ON THE MASTERS REPO (i.e. the remote repository that lives on Github)  <-
 ORIGIN IS A REFERENCE OF THE REMOTE REPO WE CLONED FROM
 MASTER IS THE DEFAULT BRANCH WE HAVE IN OUR REPO
 THE -U OPTION TELLS GIT TO CREATE THE BRANCH MASTER ON ORIGIN IF IT DOESN’T EXIST, WHICH IS ONLY REQUIRED THE FIRST TIME YOU PUSH UP CODE TO A BRANCH.
@@ -101,12 +106,15 @@ YOU’RE MODIFYING YOUR CODE WHEN YOU SUDDENLY REALIZE THAT THE CHANGES YOU MADE
 ## GIT HISTORY
 1. SHOW LOG OF COMMIT HISTORY, FROM THE LATEST TO OLDEST 
 	`$ git log `
+	`git log --pretty=oneline`
 
 - Gives the last 2 git entries
     `git log -2`
 
 2. DISPLAY THE LOG IN ONE LINE, IN A SHORT FORMAT
+	`git log --oneline --decorate --graph --all`
 	`$ git log --all --online -graph --decorate `(this has been aliased tho)
+	`git log --oneline --decorate --graph (for only the present branch)`
 - YOU COULD SPECIFY A RANGE OF COMMIT ID
 	`$ git log 33f23q3...a6se423`
 - USING TIME BASED LOG
@@ -152,7 +160,9 @@ if you've already created a develop branch for the project on your local compute
 ```
 
 2. To check the branch you're on:
+	`git branch`
 	`git branch -vv`
+	`git branch --list`
 	
 3. To switch
 	`git checkout branchname`
@@ -162,6 +172,8 @@ if you've already created a develop branch for the project on your local compute
 
 4. To undo a branch merge
     `git merge --abort`
+- To confirm a merge:
+	`git branch --merged`
 
 5. You are working on a project with a colleague. She created a feature branch (feature/user-profile) and pushed it to the repository. This command can you run to pull and create that remote branch locally
 
@@ -170,6 +182,14 @@ if you've already created a develop branch for the project on your local compute
 6.  To delete a branch
     `git branch -d branchname`
 
+7. To add a tag, we will run the following command.
+	`git tag -a v1.0 -m "Added first tag"`
+
+8. We can then see the details of this tag by typing:
+	`git show v1.0`
+
+9. Push this up to Github.
+	`git push --tags origin master`
 	
-	
-	
+
+>The HEAD pointer will always be pointing at something, and whatever it is pointing at is the snapshot that you are currently working in. In this case, we see that HEAD is pointing at master which is pointing at the most recent commit. Yes, we created the develop branch just a moment ago, but HEAD is still pointing at master, which means that any changes that we stage and commit will be on the master branch

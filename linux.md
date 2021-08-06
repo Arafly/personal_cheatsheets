@@ -65,7 +65,10 @@ $ - finds at the end of the line
 
 `$ grep "lines.*empty" demo_file`
 Two lines above this line is empty.
-  
+
+- Looking for strictly "is" without any substring
+    `grep -w 'is'`
+
 
 
 > Runs the last command and counts (normally what -C does is count)

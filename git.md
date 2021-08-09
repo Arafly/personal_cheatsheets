@@ -123,6 +123,9 @@ YOU’RE MODIFYING YOUR CODE WHEN YOU SUDDENLY REALIZE THAT THE CHANGES YOU MADE
 	`$ git log -- file.js`
 - TO SEE THE HISTORY OF WHAT CHANGES HAPPENED
 	`$ git show`
+
+- To see which changes you've done before committing them?
+	`git diff`
 	
 	
 ### To update git version on Windows

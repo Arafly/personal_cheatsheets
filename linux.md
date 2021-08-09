@@ -31,7 +31,11 @@ Local user information is stored in the /etc/passwd file. Each line in this file
  
 10. Kernel version, distro and stuff
 	`uname -a`
-	
+
+11. ```tail -n 11 [filename]  -> Last 11 lines  
+    tail -c 20 [filename]  -> Last 20 characters
+    head -n 11 [filename]  -> First 11 lines  
+    head -c 20 [filename]  -> First 20 characters```
 ### GREP, SED & AWK
 GREP finds only. SED finds and replaces.
 
@@ -70,18 +74,17 @@ Two lines above this line is empty.
     `grep -w 'is'`
 
 
-
 > Runs the last command and counts (normally what -C does is count)
 "!! -c"
 
- 
 ### To check space
-	df -ah | htop | top
+	df -ah
 	df -h filename
 	free -h
 	
 CPU Usage, Processes 
 	ps aux | grep service
+    htop | top (CPU Usage)
 	
 w | last | lastreboot
 type -a cmd

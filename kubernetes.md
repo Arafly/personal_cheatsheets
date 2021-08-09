@@ -1,6 +1,3 @@
-	
-	kubectl describe deployment
-
 1. Bootstrap a yaml file
    
 	`kubectl run redis --image=nginx --dry-run=client -o yaml > pod.yaml`
@@ -66,7 +63,8 @@
 	
 ### Get all pods with their labels
     kubectl get pods
-	kubectl get pods -o wide -w
+    kubectl get pods -o wide
+	kubectl get pods -o wide -w (-w is for watch)
 	kubectl describe pod podname
 	kubectl describe pods
 	kubectl get po -n kube-system -L k8s-app
@@ -79,12 +77,23 @@ SERVICE IS A K8S RESOURCE THAT PROVIDES LAYER-4 LOAD BALANCING FOR A GROUP OF PO
 	kubectl create -f service-def.yml
 	kubectl get services
 
+    kubectl expose deploy nginx --port=8080 --target-port=80
+
+    kubectl edit service-name
+### To see the endpoint associated with a running pod
+	kubectl get endpoints service-name || podname
+
+> List of healthy endpoints are maintained by the endpoint-controller (one of control-manager goons)
+
 - Cluster IP:
     - An internal LB for exposing services WITHIN a cluster (default provided by k8s)
 - Node Port:
   - An internal LB for exposing services EXTERNAL to the cluster
 - Load Balancer:
   - Usually provisioned by the Cloud Provider 
+
+### Check the built-in service for DNS
+    kubectl get svc -n kube-system kube-dns
 
 ```
 1. Initializes cluster master node:
@@ -97,79 +106,79 @@ SERVICE IS A K8S RESOURCE THAT PROVIDES LAYER-4 LOAD BALANCING FOR A GROUP OF PO
 	kubectl apply -f https://raw.githubusercontent.com/kubernetes/website/master/content/en/examples/application/nginx-app.yaml
 ```
 
-To get the running nodes
+### To get the running nodes
 	kubectl get nodes
 	kubectl get nodes --request-timeout 5s
 
-JUST LIKE DOCKER, KUBELET DOESN'T RUN AS A POD, RUNS AS SYSTEMD. kUBELET invokES CRI (container runtime interface), which is an interface layer between Kubernetes and container runtimes, such as docker, containerd
-	systemctl status kubelet
+> JUST LIKE DOCKER, KUBELET DOESN'T RUN AS A POD, RUNS AS SYSTEMD. kUBELET invokES CRI (container runtime interface), which is an interface layer between Kubernetes and container runtimes, such as docker, containerd
+	`systemctl status kubelet`
 	
 	
-KUBE-PROXY LIKE KUBELET RUNS IN EVERY WORKKER NODE AND IT WATCHES THE ENDPOINT RESOURCE THAT CONNECTS THE SERVICES WITH THE PODS AND ALSO UPDATES THE IPTABLES ON ITS NODE IN ORDER TO ENSURE THAT TRAFFIC SENT TO THE SERVICES GET TO THE INTENDED OPD IP IN THE POOL
+> KUBE-PROXY LIKE KUBELET RUNS IN EVERY WORKKER NODE AND IT WATCHES THE ENDPOINT RESOURCE THAT CONNECTS THE SERVICES WITH THE PODS AND ALSO UPDATES THE IPTABLES ON ITS NODE IN ORDER TO ENSURE THAT TRAFFIC SENT TO THE SERVICES GET TO THE INTENDED IP IN THE POOL. KUBE-PROXY USES IPTABLES BEHIND THE SCENE TO FUNCTION EFFICIENTLY TO MAKE THE CLUSTER IP FUNCTION PROPERLY
 	
-Check deployments
+### Check deployments
+    kubectl describe deployment
 	kubectl get deploy -n kube-system
-	
-To get components running as daemonsets
-	kubectl get ds -n kube-system
-	
-Get the configmaps
-	kubectl get cm -n kube-system
-	
-Get the details of a particular configmap
-	kubectl get cm coredns -n kube-system -o yaml
-	
-Get namespaces
-	kubectl get ns
-	
-Create a new one
-	kubectl create ns namespace-name
-	
-Add a pod to the namespace
-	kubectl pod -ns --image=nginx -n namespace-name
-	kubectl get pod -n namespace-name
-	
-Add a deployment to a namespace
-	kubectl apply -f whatevs.yml -n namesapce-name
-	
-Get current namspace you're in.
-	kubectl config current-context
-	kubectl config get-contexts
-	
-	
-KUBE-PROXY USES IPTABLES BEHIND THE SCENE TO FUNCTION EFFICIENTLY TO MAKE THE CLUSTER IP FUNCTION PROPERLY
 
-
-CRD (Custom Resource Definition), allows you to extend the K8s objects, go beyond pods, services, deployments etc
-	kubectl get crds
-	
-	
-Controller manager manages the controller, which in turn are responsible for implementing the reconciliation loop for a particular crd
-
-
-Extract the value of a secret and pipe it into a file
-	kubectl get secrets
-	kubectl get secret demo-config -o json | jq -r .data.value | base63 --decode > ./demo.config
-	
-To retrieve configmaps
-	kubectl get configmap -n kube-system
-	
-Check the rollout on a deployment
+### Check the rollout on a deployment
 	kubectl rollout status deployment/myapp-deployment
 	kubectl rollout history deployment/myapp-deployment
 	
-To show at which level resources are scoped
-	kubectl api-resources
+5. To get components running as daemonsets
+	`kubectl get ds -n kube-system`
 	
+### To retrieve configmaps
+    kubectl get configmap -n kube-system
+	kubectl get cm -n kube-system
+	
+### Get the details of a particular configmap
+	kubectl get cm coredns -n kube-system -o yaml
+	
+## Namespace
+### Get namespaces
+	kubectl get ns
+	
+### Create a new one
+	kubectl create ns namespace-name
+	
+### Add a pod to the namespace
+	kubectl pod -ns --image=nginx -n namespace-name
+	kubectl get pod -n namespace-name
+	
+### Add a deployment to a namespace
+	kubectl apply -f whatevs.yml -n namesapce-name
+	
+### Get current namspace you're in.
+	kubectl config current-context
+	kubectl config get-contexts
 
-Useful etcd commands
-	etcdctl version
-	etcdctl member list
+## CRD (Custom Resource Definition), allows you to extend the K8s objects, go beyond pods, services, deployments etc
+	kubectl get crds
 	
-Get the list of resource you're authorized to interact with in a cluster
+> Controller manager manages the controller, which in turn are responsible for implementing the reconciliation loop for a particular crd
+
+
+### Extract the value of a secret and pipe it into a file
+	kubectl get secrets
+	kubectl get secret demo-config -o json | jq -r .data.value | base63 --decode > ./demo.config
+
+	
+6. To show at which level resources are scoped
+	`kubectl api-resources`
+	
+7. Useful etcd commands
+	```etcdctl version
+	etcdctl member list```
+	
+### Get the list of resource you're authorized to interact with in a cluster
 	kubectl auth can-i --list
 	
-
-To access a cluster, you need to know the location of the cluster and have credentials to access it.
+### To access a cluster, you need to know the location of the cluster and have credentials to access it.
 	kubectl config view
 	kubectl cluster-info
+
+## INGRESS
+Helps with:
+- Traffic consolidation (one entry point for traffic into a cluster)
+- TLS Management
+- Path based routing (L7)

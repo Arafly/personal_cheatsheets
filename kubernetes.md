@@ -45,10 +45,8 @@
 	kubectl edit replicaset replica.yml
 	kubectl scale rs --replica=6 replicaset-name
 
-2. Check all the namespace in a system
-	`kubectl get pods -n kube-system`
 	
-3. Forgot what something does. Use:
+1. Forgot what something does. Use:
 
 	`kubectl explain pod`
 	`kubectl explain pod.spec.containers.ports`
@@ -77,7 +75,7 @@ SERVICE IS A K8S RESOURCE THAT PROVIDES LAYER-4 LOAD BALANCING FOR A GROUP OF PO
 	kubectl create -f service-def.yml
 	kubectl get services
 
-    kubectl expose deploy nginx --port=8080 --target-port=80
+    kubectl expose deployment nginx --port=8080 --target-port=80
 
     kubectl edit service-name
 ### To see the endpoint associated with a running pod
@@ -135,19 +133,30 @@ SERVICE IS A K8S RESOURCE THAT PROVIDES LAYER-4 LOAD BALANCING FOR A GROUP OF PO
 	kubectl get cm coredns -n kube-system -o yaml
 	
 ## Namespace
+
+> Using namespace allows to segregate rules about traffic flow for each tier in a cluster, thereby eliminating the need for physical seperation and external firewall between the tiers.
+> It's common for different tiers of applications to be owned by different teams in an organization, and having them segregated by the namespaces is a clear delineation of responsibilities between those teams and apps.
+
+### Check all the pods in the entire namespace in a system
+	`kubectl get pods -n kube-system`
+
 ### Get namespaces
-	kubectl get ns
+	kubectl get ns || kubectl get ns --no-headers
 	
 ### Create a new one
 	kubectl create ns namespace-name
 	
 ### Add a pod to the namespace
-	kubectl pod -ns --image=nginx -n namespace-name
-	kubectl get pod -n namespace-name
+	kubectl run redis --image=redis -n finance || kubectl pod -ns --image=nginx -n namespace-name
+	kubectl get po -n namespace-name || kubectl get po --namespace=research
 	
+	kubectl get pods --all-namespaces
 ### Add a deployment to a namespace
 	kubectl apply -f whatevs.yml -n namesapce-name
 	
+### Switch current namspace you're in
+	kubectl config set-context $(kubectl config current-context) --namespace=dev
+
 ### Get current namspace you're in.
 	kubectl config current-context
 	kubectl config get-contexts
@@ -178,7 +187,7 @@ SERVICE IS A K8S RESOURCE THAT PROVIDES LAYER-4 LOAD BALANCING FOR A GROUP OF PO
 	kubectl cluster-info
 
 ## INGRESS
-Helps with:
+Kubernetes Ingress resources and controllers provide higher-level routing capabilities, such as HTTP, for services running on your cluster. Ingress helps with:
 - Traffic consolidation (one entry point for traffic into a cluster)
 - TLS Management
 - Path based routing (L7)

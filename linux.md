@@ -77,6 +77,12 @@ Two lines above this line is empty.
 > Runs the last command and counts (normally what -C does is count)
 "!! -c"
 
+12. You can also test out the download speed of your internet connection.
+	`$ wget -O /dev/null <big_file_link>`
+
+13. In certain situations, the output may not be useful at all. Using redirection, we can dump all the output into the void.
+	`$ grep -r hello /sys/ > /dev/null 2>&1`
+
 ### To check space
 	df -ah
 	df -h filename

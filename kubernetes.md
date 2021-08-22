@@ -75,6 +75,7 @@ Or
 	```kubectl get po -n kube-system
 	kubectl get pods -n kube-system | grep etcd
 	kubectl get pods -n kube-system kube-flannel-ds-amd64-xmcnm -ojson | jq .metadata.labels
+	kubectl get po -n kube-system kube-flannel-ds-amd64-xmcnm -o yaml | less
 	kubectl get pods -n kube-system kube-apiserver-node1 -o custom-columns=NAME:.metadata.name,NS:metadata.namespace
 	kubectl get pods -n kube-system -o custom-columns=NAME:.metadata.name,NS:metadata.namespace
 	```
@@ -211,3 +212,5 @@ Kubernetes Ingress resources and controllers provide higher-level routing capabi
 - Traffic consolidation (one entry point for traffic into a cluster)
 - TLS Management
 - Path based routing (L7)
+
+> Network policies are namespace-scoped, and that's why there's the need for a namespaceSelector

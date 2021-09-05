@@ -133,6 +133,10 @@ netstat -atn           # For tcp
 netstat -aun           # For udp
 netstat -atun  
 ```
+
+- netcat to listen, like this:
+	`nc -l 1701`
+	`nc -vz ip port`
 	
 To check details about a user
 	id username

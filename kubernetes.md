@@ -203,7 +203,7 @@ SERVICE IS A K8S RESOURCE THAT PROVIDES LAYER-4 LOAD BALANCING FOR A GROUP OF PO
 ### Get the list of resource you're authorized to interact with in a cluster
 	kubectl auth can-i --list
 	
-### To access a cluster, you need to know the location of the cluster and have credentials to access it.
+### To access a cluster, you need to know the location of the cluster and have credentials to access it. (All clusters you have access to)
 	kubectl config view
 	kubectl cluster-info
 
@@ -214,3 +214,37 @@ Kubernetes Ingress resources and controllers provide higher-level routing capabi
 - Path based routing (L7)
 
 > Network policies are namespace-scoped, and that's why there's the need for a namespaceSelector
+
+
+
+
+# TROUBLESHOOTING
+
+- To see the endpoint associated with a running pod
+	`kubectl get endpoints pod-name`
+	
+
+- To check nodes with taints and might be missing a matching toleration
+	`kubectl get nodes -o json | jq '.items[].spec.taints'`
+	
+> ...Here we see that node01 is in a Ready state, but that Scheduling is disabled. It appears as though someone has cordon'd that node so that the scheduler wouldn't deploy resources to it. After talking with teammates you find out that someone was testing and forgot to enable scheduling again.
+
+- Uncordon the node to fix the issue.
+	`kubectl uncordon node01`
+Now, check to see if the pod is still in a pending state.
+
+- You can run below command to remove the taint from master node and then you should be able to deploy your pod on that node
+	`kubectl taint nodes node_name node-role.kubernetes.io/master-`
+
+
+- You can enter into a pod using the exec
+	`kubectl exec -it -n kube-system whatevs /bin/sh
+	kubectl exec -it -c podname bash`
+	
+Common Services Problems (such as denying connections)
+	No healthy endpoints (pod maybe going through a recycle or might have run out of resources like CPU, RAM)
+	Label selector incorrect (you could be searching a label that wasn't stated in the manifest)
+	Pods listening on a port different than configured in the service (for example image has been changed)
+	Too many services defined in the cluster
+	DNS for pod is misconfigured
+	Ensure kube-proxy is running on the node

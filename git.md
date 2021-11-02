@@ -84,7 +84,7 @@ THE -U OPTION TELLS GIT TO CREATE THE BRANCH MASTER ON ORIGIN IF IT DOESN’T EX
 YOU’RE MODIFYING YOUR CODE WHEN YOU SUDDENLY REALIZE THAT THE CHANGES YOU MADE ARE NOT GREAT, AND YOU’D LIKE TO RESET THEM. RATHER THAN CLICKING UNDO ON EVERYTHING YOU EDITED, YOU CAN RESET YOUR FILES TO THE HEAD OF THE BRANCH:
 	`$ git reset --hard HEAD`
 
->  If you have staged a file say example.py ready for commit but you wish to unstage it, which command will you use
+>  If you have staged a file say example.py ready for commit but you wish to unstage it, which command will you use (bascially undo the effect of 'git add')
   `git reset HEAD example.py`
 
 - OR IF YOU WANT TO RESET A SINGLE FILE:
@@ -197,6 +197,9 @@ if you've already created a develop branch for the project on your local compute
 
 9. Push this up to Github.
 	`git push --tags origin master`
+
+10. a lightweight way to send a very small change to a project which you cannot push to git (probably your remote Git repository is down)
+    `git format-patch`
 	
 
 >The HEAD pointer will always be pointing at something, and whatever it is pointing at is the snapshot that you are currently working in. In this case, we see that HEAD is pointing at master which is pointing at the most recent commit. Yes, we created the develop branch just a moment ago, but HEAD is still pointing at master, which means that any changes that we stage and commit will be on the master branch

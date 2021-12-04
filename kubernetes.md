@@ -71,7 +71,8 @@ Or
 	`kubectl explain pod`
 	`kubectl explain pod.spec.containers.ports`
 	
-4. Format your output(json) and pipe it into a readable
+2. Format your output(json) and pipe it into a readable
+   
 	```kubectl get po -n kube-system
 	kubectl get pods -n kube-system | grep etcd
 	kubectl get pods -n kube-system kube-flannel-ds-amd64-xmcnm -ojson | jq .metadata.labels
@@ -79,7 +80,11 @@ Or
 	kubectl get pods -n kube-system kube-apiserver-node1 -o custom-columns=NAME:.metadata.name,NS:metadata.namespace
 	kubectl get pods -n kube-system -o custom-columns=NAME:.metadata.name,NS:metadata.namespace
 	```
-	
+
+3. To see only the configuration information associated with the current context, use the --minify flag.
+
+	`kubectl config --kubeconfig=config-demo view --minify`
+
 ### Get all pods with their labels
     kubectl get pods
     kubectl get pods -o wide

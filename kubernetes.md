@@ -221,6 +221,20 @@ Kubernetes Ingress resources and controllers provide higher-level routing capabi
 
 > Network policies are namespace-scoped, and that's why there's the need for a namespaceSelector
 
+### Persistent Volume and Claims
+
+PV is the way to define the storage data, such as storage classes. Unlike ordinary volumes, PV is a resource object in a Kubernetes cluster; creating a PV is equivalent to creating a storage resource object. To use this resource, it must be requested through persistent volume claims (PVC). 
+A PVC volume is a request for storage, which is used to mount a PV into a Pod.
+
+<!-- To check volumes and get the persistent volume list: -->
+`kubectl get pv`
+
+<!-- To get the persistent volume claim list: -->
+`kubectl get pvc`
+
+<!-- To get the storage class list: -->
+`kubectl get sc`
+
 
 
 

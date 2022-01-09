@@ -24,6 +24,8 @@ Or
 
 > Both the above commands have their own challenges. While one of it cannot accept a selector the other cannot accept a node port. I would recommend going with the kubectl expose command. If you need to specify a node port, generate a definition file using the same command and manually input the nodeport before creating the service.
 
+ NodePort uses Layer 4 routing rules and the Linux iptables utility, which limits Layer 7 routing.
+
 ### Create an NGINX Pod
 	kubectl run nginx --image=nginx
 
@@ -116,6 +118,12 @@ SERVICE IS A K8S RESOURCE THAT PROVIDES LAYER-4 LOAD BALANCING FOR A GROUP OF PO
   - An internal LB for exposing services EXTERNAL to the cluster
 - Load Balancer:
   - Usually provisioned by the Cloud Provider 
+
+> Controllers are control loops that watch the state of your cluster, then make or request changes where needed. Each controller tries to move the current cluster state closer to the desired state.” Controllers are used to manage state in Kubernetes for many tasks: properly assigning resources, designating persistent storage, and managing cron jobs.
+
+
+>  Ingress controllers are designed to treat dynamic Layer 7 routing as a first‑class citizen. This means that Ingress controllers provide far more granular control and management with less toil.
+> You can easily use an Ingress controller not only to control ingress traffic but also to deliver service‑level performance metrics and as part of a security policy. Ingress controllers have many features of traditional external load balancers, like TLS termination, handling multiple domains and namespaces, and of course, load balancing traffic. Ingress controllers can load balance traffic at the per‑request rather than per‑service level, a more useful view of Layer 7 traffic and a far better way to enforce SLAs. Ingress controllers can also enforce egress rules which permit outgoing traffic from certain pods only to specific external services, or ensure that traffic is mutually encrypted using mTLS.
 
 ### Check the built-in service for DNS
     kubectl get svc -n kube-system kube-dns
@@ -235,6 +243,11 @@ A PVC volume is a request for storage, which is used to mount a PV into a Pod.
 <!-- To get the storage class list: -->
 `kubectl get sc`
 
+
+### ServiceAccount
+Every Pod that's deployed to a Kubernetes cluster (with more or less default configuration) will have a service account associated with it. *“What’s a service account?”* It’s a way of giving and “identity” to a process that runs on a specific Pod. In simple words it means that each pod will have its own “username” and “password” (actually it’s just a token, but the analogy holds). By default, every Pod in your cluster will be associated with a single service account called… well, “default”
+
+Where could it prove useful? As a result, Pod can use these credentials to call cluster’s apiserver, and the apiserver will know exactly which Pod (or actually - which service account) is calling it. That’s quite useful if you want to restrict what Pods can and cannot do when calling the Kubernetes control plane API.
 
 
 

@@ -123,7 +123,7 @@ SERVICE IS A K8S RESOURCE THAT PROVIDES LAYER-4 LOAD BALANCING FOR A GROUP OF PO
 
 
 >  Ingress controllers are designed to treat dynamic Layer 7 routing as a first‑class citizen. This means that Ingress controllers provide far more granular control and management with less toil.
-> You can easily use an Ingress controller not only to control ingress traffic but also to deliver service‑level performance metrics and as part of a security policy. Ingress controllers have many features of traditional external load balancers, like TLS termination, handling multiple domains and namespaces, and of course, load balancing traffic. Ingress controllers can load balance traffic at the per‑request rather than per‑service level, a more useful view of Layer 7 traffic and a far better way to enforce SLAs. Ingress controllers can also enforce egress rules which permit outgoing traffic from certain pods only to specific external services, or ensure that traffic is mutually encrypted using mTLS.
+> You can easily use an Ingress controller not only to control ingress traffic but also to deliver service‑level performance metrics and as part of a security policy. Ingress controllers have many features of traditional external load balancers, like TLS termination, handling multiple domains and namespaces, and of course, load balancing traffic. Ingress controllers can load-balance traffic at the per‑request rather than per‑service level, a more useful view of Layer 7 traffic and a far better way to enforce SLAs. Ingress controllers can also enforce egress rules which permit outgoing traffic from certain pods only to specific external services, or ensure that traffic is mutually encrypted using mTLS.
 
 ### Check the built-in service for DNS
     kubectl get svc -n kube-system kube-dns
@@ -226,6 +226,8 @@ Kubernetes Ingress resources and controllers provide higher-level routing capabi
 - Traffic consolidation (one entry point for traffic into a cluster)
 - TLS Management
 - Path based routing (L7)
+
+When you need to provide external access to your Kubernetes services, you create an Ingress resource to define the connectivity rules, including the URI path, backing service name, and other information. On its own, however, the Ingress resource doesn’t do anything. You must deploy and configure an Ingress controller application (using the Kubernetes API) to implement the rules defined in Ingress resources.
 
 > Network policies are namespace-scoped, and that's why there's the need for a namespaceSelector
 

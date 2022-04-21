@@ -13,7 +13,10 @@
 
 ### TO STASH 
 	$ git stash
+	$ git stash -u (to stash untracked files)
 	$ git stash save nameofstash
+	$ git stash push -m "srash with a message"
+	$ git stash branch new-branch 0 (to create a new branch from the stash, where 0 is the stash index)
 
 ### SHOW CONTENT OF STASHED FILES WITHOUT APPLYING
 	$ git stash list
@@ -23,6 +26,9 @@
 	$ git stash apply
 	$ git stash apply stash@{0}
 	
+### TO REMOVE STASH
+	$ git stash pop (removes the last stash and applies it to the code)
+	$ git stash clear
 
 
 ## GIT FLOW
@@ -54,6 +60,10 @@
 	$ git difftool to use meld for difftool
 	$ git mergetool to use meld for merge conflicts
 	 
+### TO CHERRY-PICK A/SOME SPECIFC COMMITS
+	$ git cherry-pick commit-id (this merges the change immediately)
+	$ git cherry-pick commit-id -n (doesn't merge instantly)
+
 
 > HEAD MEANS YOUR LOCAL CHANGES ->
 UPSTREAM IS THE FILE ON THE MASTERS REPO (i.e. the remote repository that lives on Github)  <-
@@ -104,8 +114,9 @@ YOU’RE MODIFYING YOUR CODE WHEN YOU SUDDENLY REALIZE THAT THE CHANGES YOU MADE
 	> then restore the file with
 	$ git checkout -- file.js
 
-### If you wish to overwrite the previous git commit with a new one
-`git commit --amend`
+### If you wish to edit the previous commit message, you can use the following command:
+	$ git commit --amend --no-edit
+	`git commit --amend`
 	
 ## GIT HISTORY
 1. SHOW LOG OF COMMIT HISTORY, FROM THE LATEST TO OLDEST 
@@ -171,7 +182,7 @@ if you've already created a develop branch for the project on your local compute
 	`git branch -vv`
 	`git branch --list`
 	
-3. To switch
+3. To gititch branch
 	`git checkout branchname`
 
 3. To rename branch br1 to br2
@@ -186,8 +197,9 @@ if you've already created a develop branch for the project on your local compute
 
     `git checkout -b feature/user-profile origin feature/user-profile`
 
-6.  To delete a branch
+6.  To delete a branch (first checkout the branch before deleting)
     `git branch -d branchname`
+	`git branch -D branchname` (to delete a branch forcefully whether merged or not)
 
 7. To add a tag, we will run the following command.
 	`git tag -a v1.0 -m "Added first tag"`
@@ -201,5 +213,6 @@ if you've already created a develop branch for the project on your local compute
 10. a lightweight way to send a very small change to a project which you cannot push to git (probably your remote Git repository is down)
     `git format-patch`
 	
+
 
 >The HEAD pointer will always be pointing at something, and whatever it is pointing at is the snapshot that you are currently working in. In this case, we see that HEAD is pointing at master which is pointing at the most recent commit. Yes, we created the develop branch just a moment ago, but HEAD is still pointing at master, which means that any changes that we stage and commit will be on the master branch

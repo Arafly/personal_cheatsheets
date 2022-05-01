@@ -77,7 +77,7 @@ Or
    
 	```kubectl get po -n kube-system
 	kubectl get pods -n kube-system | grep etcd
-	kubectl get pods -n kube-system kube-flannel-ds-amd64-xmcnm -ojson | jq .metadata.labels
+	kubectl get pods -n kube-system kube-flannel-ds-amd64-xmcnm -o json | jq .metadata.labels
 	kubectl get po -n kube-system kube-flannel-ds-amd64-xmcnm -o yaml | less
 	kubectl get pods -n kube-system kube-apiserver-node1 -o custom-columns=NAME:.metadata.name,NS:metadata.namespace
 	kubectl get pods -n kube-system -o custom-columns=NAME:.metadata.name,NS:metadata.namespace

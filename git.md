@@ -15,7 +15,7 @@
 	$ git stash
 	$ git stash -u (to stash untracked files)
 	$ git stash save nameofstash
-	$ git stash push -m "srash with a message"
+	$ git stash push -m "stash with a message"
 	$ git stash branch new-branch 0 (to create a new branch from the stash, where 0 is the stash index)
 
 ### SHOW CONTENT OF STASHED FILES WITHOUT APPLYING

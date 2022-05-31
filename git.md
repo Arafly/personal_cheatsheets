@@ -182,8 +182,9 @@ if you've already created a develop branch for the project on your local compute
 	`git branch -vv`
 	`git branch --list`
 	
-3. To gititch branch
+3. To git Switch branch
 	`git checkout branchname`
+	`git switch branchname`
 
 3. To rename branch br1 to br2
     `git branch -m br1 br2`
@@ -212,7 +213,11 @@ if you've already created a develop branch for the project on your local compute
 
 10. a lightweight way to send a very small change to a project which you cannot push to git (probably your remote Git repository is down)
     `git format-patch`
-	
+
+11. You can rename a local branch by running the following commands:
+	`git checkout master`
+	Then, rename the branch by running:
+	`git branch -m old-name new-name`
 
 
 >The HEAD pointer will always be pointing at something, and whatever it is pointing at is the snapshot that you are currently working in. In this case, we see that HEAD is pointing at master which is pointing at the most recent commit. Yes, we created the develop branch just a moment ago, but HEAD is still pointing at master, which means that any changes that we stage and commit will be on the master branch

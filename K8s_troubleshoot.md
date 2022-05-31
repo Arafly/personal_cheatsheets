@@ -70,6 +70,19 @@ Usually, a container can't start when:
 - You misconfigured the container.
 - The Liveness probe failed too many times.
 
+### CrashLoopBackOff: Common Causes
+The CrashLoopBackOff error can be caused by a variety of issues, including:
+
+- Insufficient resources—lack of resources prevents the container from loading
+- Locked file—a file was already locked by another container
+- Locked database—the database is being used and locked by other pods
+- Failed reference—reference to scripts or binaries that are not present on the container
+- Setup error—an issue with the init-container setup in Kubernetes
+- Config loading error—a server cannot load the configuration file
+- Misconfigurations—a general file system misconfiguration
+- Connection issues—DNS or kube-DNS is not able to connect to a third-party service
+- Deploying failed services—an attempt to deploy services/applications that have already failed (e.g. due to a lack of access to other services)
+
 You should try and retrieve the logs from that container to investigate why it failed.
 If you can't see the logs because your container is restarting too quickly, you can use the following command:
 
@@ -195,16 +208,5 @@ If you do not have other available nodes, or you tried the above and the problem
 - Reduce the number of disk partitions or add mount points
 - Check access mode on the new node
 
-### CrashLoopBackOff: Common Causes
-The CrashLoopBackOff error can be caused by a variety of issues, including:
 
-- Insufficient resources—lack of resources prevents the container from loading
-- Locked file—a file was already locked by another container
-- Locked database—the database is being used and locked by other pods
-- Failed reference—reference to scripts or binaries that are not present on the container
-- Setup error—an issue with the init-container setup in Kubernetes
-- Config loading error—a server cannot load the configuration file
-- Misconfigurations—a general file system misconfiguration
-- Connection issues—DNS or kube-DNS is not able to connect to a third-party service
-- Deploying failed services—an attempt to deploy services/applications that have already failed (e.g. due to a lack of access to other services)
 

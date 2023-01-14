@@ -209,4 +209,17 @@ If you do not have other available nodes, or you tried the above and the problem
 - Check access mode on the new node
 
 
+## MinimumReplicasUnavailable
+### Deployment does not have minimum availability
+
+This error indicates that the Kubernetes API server is unable to reach the node. This has nothing to do with your containers, pods or even your CNI network. no route to host indicates that either:
+
+The host is unavailable
+A network segmentation has occurred
+The Kubelet is unable to answer the API server
+
+- Try getting more explanation with:
+
+`kubectl get deployment dashboard -o yaml -n consul`
+
 

@@ -115,8 +115,8 @@ YOU’RE MODIFYING YOUR CODE WHEN YOU SUDDENLY REALIZE THAT THE CHANGES YOU MADE
 	$ git checkout -- file.js
 
 ### If you wish to edit the previous commit message, you can use the following command:
-	$ git commit --amend --no-edit
-	`git commit --amend`
+	`$ git commit --amend --no-edit`
+	`$ git commit --amend ""`
 	
 ## GIT HISTORY
 1. SHOW LOG OF COMMIT HISTORY, FROM THE LATEST TO OLDEST 

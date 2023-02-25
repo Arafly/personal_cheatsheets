@@ -222,4 +222,22 @@ The Kubelet is unable to answer the API server
 
 `kubectl get deployment dashboard -o yaml -n consul`
 
+Imagine that we have a namespace named restricted that only allows for 200 MiB, and our pod requires 50 MiB. The first 4 pods will be successfully created, but the fifth one will fail.
+After a few seconds, the Available condition stabilizes to False:
 
+We are asking for at most 0 unavailable replicas and there is 1 unavailable replica (due to the resource quota). Thus, the “minimum availability” inequality does not hold which means the deployment has the condition Available = False:
+
+
+
+
+## 💡What do you do if your Kubernetes cluster runs out of IP addresses?
+
+**networkPlugin cni failed to set up pod "nginx" network: add cmd: failed to assign an IP address to container**
+
+- 📌This is a P1 issue, so it needs a super quick fix first and then a long term solution. The fastest way to resolve this issue is to add more IP’s to the cluster but lets first understand the problem in detail. Our schedular is saying that it has no more IP’s in its pool to provide to the pods. But how does the schedular gets this information ?
+
+- 📌Kubernetes assigns an IP address (the Pod IP) to the virtual network interface in the Pod's network namespace from a range of addresses reserved for Pods on the node. In other words it takes the IP for the pod from the node on which the pod is to be scheduled. So can we say that in our case all the worker nodes have exhausted there IPs ? This is where things get interesting. There might be nodes which have IPs available but they don’t have the resources like CPU and Memory to run the pod. This is easy to conform if you are using a managed cluster like EKS. In the AWS console for EKS you can see the available IPs.
+
+- 📌The quickest solution in this case is to find two nodes, one that has the IP but not the resource (Node A) and other that has resource but no IP (Node B). What you have to do now is to find out the pods which are consuming highest resources in Node A and the ones which are consuming least resource in Node B. Once you identify them, edit their deployments to define node affinity / label selector so that pods of Node A go to Node B and pod from Node B go to Node A. Congratulation you can call yourself a k8s manual schedular, because that is what we are doing and this is the fastest possible solution.
+
+- 📌Longterm solution would be to understand the NI / NC (network interface / network card) of the worker nodes. The IP capacity of your Kubernetes cluster depends upon the VPC CIDR of course and then on the number of network card your instance can hold. Either replace the worker nodes with bigger capacity or add more worker nodes to the cluster. You can also create and use secondary CIDR for your Kubernetes cluster or create a new subnet and then add worker nodes, but these are all time taking solutions.

@@ -142,34 +142,6 @@ If the "Endpoints" section is empty, there are two explanations:
 
 If you see a list of endpoints, but still can't access your application, then the targetPort in your service is the likely culprit.
 
-### 3. Troubleshooting Ingress
-If you've reached this section, then:
-
-- The Pods are Running and Ready.
-- The Service distributes the traffic to the Pod.
-
-But you still can't see a response from your app.
-
-It means that most likely, the Ingress is misconfigured.
-Since the Ingress controller is a third-party component in the cluster, there are different debugging techniques depending on the type of Ingress controller.
-
-The Ingress uses the service.name and service.port to connect to the Service.
-You should check that those are correctly configured.
-
-You can inspect that the Ingress is correctly configured with:
-
-`kubectl describe ingress my-ingress`
-
-If the Backend column is empty, then there must be an error in the configuration.
-
-If you can see the endpoints in the Backend column, but still can't access the application, the issue is likely to be:
-
-- How you exposed your Ingress to the public internet.
-- How you exposed your cluster to the public internet.
-
-You can isolate infrastructure issues from Ingress by connecting to the Ingress Pod directly.
-
-First, retrieve the Pod for your Ingress controller (which could be located in a different namespace):
 
 
 ### Kubernetes PVC Errors: Common Causes and Resolution

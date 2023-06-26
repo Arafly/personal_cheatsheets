@@ -213,3 +213,41 @@ We are asking for at most 0 unavailable replicas and there is 1 unavailable repl
 - 📌The quickest solution in this case is to find two nodes, one that has the IP but not the resource (Node A) and other that has resource but no IP (Node B). What you have to do now is to find out the pods which are consuming highest resources in Node A and the ones which are consuming least resource in Node B. Once you identify them, edit their deployments to define node affinity / label selector so that pods of Node A go to Node B and pod from Node B go to Node A. Congratulation you can call yourself a k8s manual schedular, because that is what we are doing and this is the fastest possible solution.
 
 - 📌Longterm solution would be to understand the NI / NC (network interface / network card) of the worker nodes. The IP capacity of your Kubernetes cluster depends upon the VPC CIDR of course and then on the number of network card your instance can hold. Either replace the worker nodes with bigger capacity or add more worker nodes to the cluster. You can also create and use secondary CIDR for your Kubernetes cluster or create a new subnet and then add worker nodes, but these are all time taking solutions.
+
+
+Kubernetes POD Troubleshooting Tactics Sequence 👇
+
+𝟭. 𝗖𝗵𝗲𝗰𝗸 𝗹𝗼𝗴𝘀:
+Use 𝘬𝘶𝘣𝘦𝘤𝘵𝘭 𝘭𝘰𝘨𝘴 <𝘱𝘰𝘥_𝘯𝘢𝘮𝘦>
+
+𝟮. 𝗔𝗻𝗮𝗹𝘆𝘇𝗲 𝗣𝗼𝗱 𝗦𝘁𝗮𝘁𝘂𝘀:
+Use 𝘬𝘶𝘣𝘦𝘤𝘵𝘭 𝘨𝘦𝘵 𝘱𝘰𝘥 <𝘱𝘰𝘥_𝘯𝘢𝘮𝘦> and examine status fields
+
+𝟯. 𝗗𝗲𝘀𝗰𝗿𝗶𝗯𝗲 𝗣𝗼𝗱:
+Execute 𝘬𝘶𝘣𝘦𝘤𝘵𝘭 𝘥𝘦𝘴𝘤𝘳𝘪𝘣𝘦 𝘱𝘰𝘥 <𝘱𝘰𝘥_𝘯𝘢𝘮𝘦>
+
+𝟰. 𝗩𝗲𝗿𝗶𝗳𝘆 𝗣𝗼𝗱 𝗖𝗼𝗻𝗳𝗶𝗴𝘂𝗿𝗮𝘁𝗶𝗼𝗻:
+Review the pod's YAML configuration
+
+𝟱. 𝗖𝗵𝗲𝗰𝗸 𝗘𝘃𝗲𝗻𝘁𝘀:
+Run 𝘬𝘶𝘣𝘦𝘤𝘵𝘭 𝘨𝘦𝘵 𝘦𝘷𝘦𝘯𝘵𝘴
+
+𝟲. 𝗩𝗮𝗹𝗶𝗱𝗮𝘁𝗲 𝗖𝗼𝗻𝘁𝗮𝗶𝗻𝗲𝗿 𝗜𝗺𝗮𝗴𝗲𝘀:
+Check image availability and version in pod YAML
+
+𝟳. 𝗥𝗲𝘀𝘁𝗮𝗿𝘁 𝗣𝗼𝗱:
+𝘬𝘶𝘣𝘦𝘤𝘵𝘭 𝘳𝘰𝘭𝘭𝘰𝘶𝘵 𝘳𝘦𝘴𝘵𝘢𝘳𝘵 𝘥𝘦𝘱𝘭𝘰𝘺𝘮𝘦𝘯𝘵/<𝘥𝘦𝘱𝘭𝘰𝘺𝘮𝘦𝘯𝘵_𝘯𝘢𝘮𝘦>
+
+𝟴. 𝗥𝗲𝘃𝗶𝗲𝘄 𝗦𝗲𝗿𝘃𝗶𝗰𝗲 𝗗𝗲𝗽𝗲𝗻𝗱𝗲𝗻𝗰𝗶𝗲𝘀:
+Analyze dependencies in YAML or documentation
+
+𝟵. 𝗖𝗵𝗲𝗰𝗸 𝗡𝗲𝘁𝘄𝗼𝗿𝗸 𝗖𝗼𝗻𝗻𝗲𝗰𝘁𝗶𝘃𝗶𝘁𝘆:
+Get a shell to the running container:
+𝘬𝘶𝘣𝘦𝘤𝘵𝘭 𝘦𝘹𝘦𝘤 -𝘪𝘵 <𝘱𝘰𝘥_𝘯𝘢𝘮𝘦> -- 𝘴𝘩
+
+ping or curl to test network connectivity:
+𝘱𝘪𝘯𝘨 <𝘵𝘢𝘳𝘨𝘦𝘵_𝘩𝘰𝘴𝘵>
+𝘤𝘶𝘳𝘭 <𝘵𝘢𝘳𝘨𝘦𝘵_𝘶𝘳𝘭>
+
+𝟭𝟬. 𝗜𝗻𝘀𝗽𝗲𝗰𝘁 𝗥𝗲𝘀𝗼𝘂𝗿𝗰𝗲 𝗨𝘀𝗮𝗴𝗲:
+Utilize 𝘬𝘶𝘣𝘦𝘤𝘵𝘭 𝘵𝘰𝘱 𝘱𝘰𝘥 <𝘱𝘰𝘥_𝘯𝘢𝘮𝘦>

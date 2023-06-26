@@ -97,8 +97,9 @@ Or
 	kubectl get po -n kube-system -l k8s-app=coredns
 	
 	
-> TYPICALLY WE DON'T ROUTE TRAFFIC DIRECTLY TO PODS (EVEN THO THEY'VE GOT THEIR OWN IP ADDRESSES WHICH CHANGES OFTEN DURING SCALING). WE DO SO THE THE SERVICES WHICH HAS A VIRTUAL IP AND DNS MAPPING, THESE THEN TAKES THE TRAFFIC AND FORWARD TO THE PODS, REGARDLESS OF THEIR NUMBER OR CHANGED IP ADDRESS.
-SERVICE IS A K8S RESOURCE THAT PROVIDES LAYER-4 LOAD BALANCING FOR A GROUP OF PODS, ALSO SERVICE DISCOVERY USING CLSUTER'S INTERNAL DNS
+> TYPICALLY WE DON'T ROUTE TRAFFIC DIRECTLY TO PODS (EVEN THO THEY'VE GOT THEIR OWN IP ADDRESSES WHICH CHANGES OFTEN DURING SCALING). WE DO SO THE SERVICES (WHICH HAS A VIRTUAL IP AND DNS MAPPING), THESE THEN TAKES THE TRAFFIC AND FORWARD TO THE PODS, REGARDLESS OF THEIR NUMBER OR CHANGED IP ADDRESS.
+
+SERVICE IS A K8S RESOURCE THAT PROVIDES LAYER-4 LOAD BALANCING FOR A GROUP OF PODS, ALSO SERVICE DISCOVERY USING CLUSTER'S INTERNAL DNS
 	kubectl get po,svc -o wide
 	kubectl create -f service-def.yml
 	kubectl get services
@@ -119,7 +120,7 @@ SERVICE IS A K8S RESOURCE THAT PROVIDES LAYER-4 LOAD BALANCING FOR A GROUP OF PO
 - Load Balancer:
   - Usually provisioned by the Cloud Provider 
 
-> Controllers are control loops that watch the state of your cluster, then make or request changes where needed. Each controller tries to move the current cluster state closer to the desired state.” Controllers are used to manage state in Kubernetes for many tasks: properly assigning resources, designating persistent storage, and managing cron jobs.
+> Controllers are control loops that watch the state of your cluster, then make or request changes where needed. Each controller tries to move the current cluster state closer to the desired state. Controllers are used to manage state in Kubernetes for many tasks: properly assigning resources, designating persistent storage, and managing cron jobs.
 
 
 >  Ingress controllers are designed to treat dynamic Layer 7 routing as a first‑class citizen. This means that Ingress controllers provide far more granular control and management with less toil.
@@ -143,7 +144,7 @@ SERVICE IS A K8S RESOURCE THAT PROVIDES LAYER-4 LOAD BALANCING FOR A GROUP OF PO
 	kubectl get nodes
 	kubectl get nodes --request-timeout 5s
 
-> JUST LIKE DOCKER, KUBELET DOESN'T RUN AS A POD, RUNS AS SYSTEMD. kUBELET invokES CRI (container runtime interface), which is an interface layer between Kubernetes and container runtimes, such as docker, containerd
+> JUST LIKE DOCKER, KUBELET DOESN'T RUN AS A POD, RUNS AS A DAENON MANAGED BY SYSTEMD. kUBELET invokES CRI (container runtime interface), which is an interface layer between Kubernetes and container runtimes, such as docker, containerd
 	`systemctl status kubelet`
 	
 	
